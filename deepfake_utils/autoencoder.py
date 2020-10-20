@@ -1,7 +1,7 @@
 import torch
 import torch.utils.data
 from torch import nn, optim
-from padding_same_conv import Conv2d
+from conv_nd import Conv2d
 
 
 def toTensor(img):
@@ -14,6 +14,9 @@ def var_to_np(img_var):
 
 
 class _ConvLayer(nn.Sequential):
+    """
+    Simple Conv2d layer with an activation function
+    """
     def __init__(self, input_features, output_features):
         super(_ConvLayer, self).__init__()
         self.add_module('conv2', Conv2d(input_features, output_features,
@@ -22,6 +25,9 @@ class _ConvLayer(nn.Sequential):
 
 
 class _UpScale(nn.Sequential):
+    """
+    trans
+    """
     def __init__(self, input_features, output_features):
         super(_UpScale, self).__init__()
         self.add_module('conv2_', Conv2d(input_features, output_features * 4,
@@ -45,7 +51,7 @@ class Reshape(nn.Module):
         return output
 
 
-class _PixelShuffler(nn.Module):
+class _PixelShuffler(nn.Module):  ## works on even number of channels 
     def forward(self, input):
         batch_size, c, h, w = input.size()
         rh, rw = (2, 2)

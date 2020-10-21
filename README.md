@@ -8,7 +8,7 @@ Sub-Pixel Convolutional Neural Network i.e pixel shuffling paper](https://arxiv.
 3. [Useful article in super-resolution](https://towardsdatascience.com/an-evolution-in-single-image-super-resolution-using-deep-learning-66f0adfb2d6b)
 
 ---
-## Notes from the main paper 
+## Notes from the deepfake paper 
 
 ### The original method
 
@@ -47,13 +47,13 @@ Contrary to previous works, they increase the resolution from LR to HR only at t
 
 In transpose convolutions, upsampling with strides adss zero values to upscale the image which are to be filled later on. Maybe even worse, these zero values have no gradient information that can be backpropagated through.
 
-While sub-pixel convolutional layers essentially uses regular convolutional layers followed by a specific type of image reshaping called a ***phase shift**. Instead of putting zeros in between pixels and having to do extra computation, they calculate more convolutions in lower resolution and resize the resulting map into an upscaled image. This way, no meaningless zeros are necessary. 
+While sub-pixel convolutional layers essentially uses regular convolutional layers followed by a specific type of image reshaping called a **phase shift**. Instead of putting zeros in between pixels and having to do extra computation, they calculate more convolutions in lower resolution and resize the resulting map into an upscaled image. This way, no meaningless zeros are necessary. 
 
 <img src = "https://raw.githubusercontent.com/atriumlts/subpixel/master/images/spcnn_diagram.png" width = "70%">
 
 > Some parts written above are quoted from [this repository](https://github.com/atriumlts/subpixel)
 
-**Phase shift** is also called “pixel shuffle”, which rearranges the elements of `H × W × C · r² `tensor to form `rH × rW × C` tensor as shown below.
+**Phase shift** is also called “pixel shuffle”, which is a tensor of size `H × W × C · r² ` to size `rH × rW × C` tensor as shown below. An implementation of this operation can be found [here](https://github.com/Mayukhdeb/deepfakes/blob/8df7f7ace220b76f4f9564ddf444593d36a85f4f/deepfake_utils/autoencoder_utils.py#L52). 
 
 <img src = "images/pixel_shuffle.png" width = "50%">
 

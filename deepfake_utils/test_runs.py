@@ -1,6 +1,7 @@
 import torch
 import autoencoder
 import autoencoder_utils
+import train_loader_util 
 
 device = ("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -10,7 +11,23 @@ This script is there to help me debug the utils
 for now the standard image size would be 64*64
 """
 
-image = torch.zeros(1,3,64, 64)
+print("sizes form dataloaders: ")
+
+train_loader_a = train_loader_util.create_dataloader(image_folder = "datasets/zidane", batch_size = 2)
+train_loader_b = train_loader_util.create_dataloader(image_folder = "datasets/yashwant", batch_size= 2)
+
+batch_a = (next(iter(train_loader_a)))
+batch_b = (next(iter(train_loader_b)))
+
+print(batch_a["x"].size())
+print(batch_a["y"].size())
+
+print(batch_b["y"].size())
+print(batch_b["y"].size())
+
+
+image  = batch_a["x"]
+
 print("image batch size :", image.size())
 
 dummy_conv = autoencoder_utils._ConvLayer(input_features = 3, output_features  =  10)
@@ -27,5 +44,10 @@ shuffled = dummy_shuffle(pred)  ## works on an even number of channels
 print("size after pixel shuffle: ", shuffled.size())
 
 ae = autoencoder.Autoencoder()
-pred = ae(image)
-print("size after forward pass through  autoencoder: ", pred.size())
+pred_a = ae.forward(image, decoder = "A")
+pred_b = ae.forward(image, decoder = "B")
+
+print("size after forward pass through  autoencoder (decoder A): ", pred_a.size())
+print("size after forward pass through  autoencoder (decoder B): ", pred_b.size())
+
+

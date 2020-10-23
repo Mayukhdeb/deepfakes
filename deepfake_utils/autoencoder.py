@@ -38,8 +38,8 @@ class Autoencoder(nn.Module):
             nn.Sigmoid(),
         )
 
-    def forward(self, x, select='A'):
-        if select == 'A':
+    def forward(self, x,  decoder ='A'):
+        if decoder == 'A':
             out = self.encoder(x)
             out = self.decoder_A(out)
         else:

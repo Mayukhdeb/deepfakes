@@ -48,7 +48,6 @@ class deepfake_trainer():
 
         out_a = self.model.forward(warped_a, decoder = "A")
         out_b = self.model.forward(warped_b, decoder = "B")
-
         loss_a = self.criterion(out_a, target_a)
         loss_b = self.criterion(out_b, target_b)
 
@@ -66,11 +65,18 @@ class deepfake_trainer():
 
         self.model.to(self.device)
 
-        for step in range(num_steps):
+        for step in tqdm(range(num_steps)):
             # print("step: ", step)
-            loss_a, loss_b = self._train_single_step()
 
-            print('lossA:{}, lossB:{}'.format( loss_a, loss_b))
+            try:
+                loss_a, loss_b = self._train_single_step()
+
+                # print('lossA:{}, lossB:{}'.format( loss_a, loss_b))
+            except KeyboardInterrupt:
+                print("ungracefully stopping...")
+                break
+
+
         torch.save(self.model.state_dict(), save_path)
         print("saved: ", save_path)
 

@@ -17,7 +17,7 @@ class Autoencoder(nn.Module):
             _ConvLayer(256, 512),
             _ConvLayer(512, 1024),
             Flatten(),
-            nn.Linear(1024 * 4 * 4, 1024),
+            nn.Linear(1024 * 4 * 4 , 1024),    ## extra *4 for 128 images 
             nn.Linear(1024, 1024 * 4 * 4),
             Reshape(),
             _UpScale(1024, 512),
@@ -27,6 +27,9 @@ class Autoencoder(nn.Module):
             _UpScale(512, 256),
             _UpScale(256, 128),
             _UpScale(128, 64),
+
+            # _UpScale(64, 64),  ## extra for 128, 128 image 
+
             Conv2d(64, 3, kernel_size=5, padding=1),
             nn.Sigmoid(),
         )
@@ -35,6 +38,10 @@ class Autoencoder(nn.Module):
             _UpScale(512, 256),
             _UpScale(256, 128),
             _UpScale(128, 64),
+
+            # _UpScale(64, 64),  ## extra for 128, 128 image 
+
+
             Conv2d(64, 3, kernel_size=5, padding=1),
             nn.Sigmoid(),
         )

@@ -13,11 +13,7 @@ for now the standard image size would be 64*64
 
 print("sizes form dataloaders: ")
 
-train_loader_a = train_loader_util.create_dataloader(image_folder = "datasets/zidane", batch_size = 2)
-train_loader_b = train_loader_util.create_dataloader(image_folder = "datasets/yashwant", batch_size= 2)
 
-batch_a = (next(iter(train_loader_a)))
-batch_b = (next(iter(train_loader_b)))
 
 print(batch_a["x"].size())
 print(batch_a["y"].size())

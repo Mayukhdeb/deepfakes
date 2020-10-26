@@ -17,6 +17,7 @@ class image_dataset(Dataset):
         self.transforms_input = transforms.Compose([
                             transforms.ToPILImage(),
                             transforms.Resize((64,64 ),Image.BILINEAR),
+                            transforms.RandomHorizontalFlip(p=0.5),
                             transforms.RandomAffine(10, translate=(0.05, 0.05), scale=None, shear=0.05, resample=False, fillcolor=0),
                             transforms.ToTensor()
                         ])
@@ -29,7 +30,9 @@ class image_dataset(Dataset):
         
     def __getitem__(self, idx): 
         image = cv2.imread(self.image_paths[idx])
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        # image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        # cv2.imshow("ssss",image)
+        # cv2.waitKey()
 
         ret  = {
                 "x": self.transforms_input(image),

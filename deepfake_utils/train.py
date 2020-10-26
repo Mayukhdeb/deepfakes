@@ -9,20 +9,20 @@ import torch
 import torch.nn as nn
 from torch import nn, optim
 
-batch_size = 3
+batch_size = 10
 train_loader_a = train_loader_util.create_dataloader(image_folder = "datasets/large/A", batch_size = batch_size)
-train_loader_b = train_loader_util.create_dataloader(image_folder = "datasets/large/B", batch_size= batch_size)
+train_loader_b = train_loader_util.create_dataloader(image_folder = "datasets/large/B", batch_size= batch_size, crop = 120)  ## folder C for cartoons dataset
 
-
+print(len(train_loader_b))
 model = autoencoder.Autoencoder()
 
 
 optimizer_a = optim.Adam([{'params': model.encoder.parameters()},
                           {'params': model.decoder_A.parameters()}]
-                         , lr=1e-5, betas=(0.5, 0.999))
+                         , lr=5e-5, betas=(0.5, 0.999))
 optimizer_b = optim.Adam([{'params': model.encoder.parameters()},
                           {'params': model.decoder_B.parameters()}]
-                         , lr=1e-5, betas=(0.5, 0.999))
+                         , lr=5e-5, betas=(0.5, 0.999))
 
 trainer =  train_utils.deepfake_trainer(
     model = model, 

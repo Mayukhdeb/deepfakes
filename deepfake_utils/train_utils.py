@@ -71,11 +71,11 @@ class deepfake_trainer():
             try:
                 loss_a, loss_b = self._train_single_step()
 
-                # print('lossA:{}, lossB:{}'.format( loss_a, loss_b))
             except KeyboardInterrupt:
                 print("ungracefully stopping...")
                 break
 
+        print('lossA:{}, lossB:{}'.format( loss_a, loss_b))
 
         torch.save(self.model.state_dict(), save_path)
         print("saved: ", save_path)

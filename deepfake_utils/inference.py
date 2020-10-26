@@ -23,7 +23,7 @@ for i in range(10, 20, 1):
 
 all_preds = cv2.cvtColor(cv2.hconcat(preds), cv2.COLOR_BGR2RGB)
 plt.imshow(all_preds)
-# plt.axis("off")
-plt.ylabel("A, A to A, A to B")
+plt.axis("off")
+# plt.ylabel("A, A to A, A to B")
 plt.savefig("output/preds.jpg")
 plt.show()

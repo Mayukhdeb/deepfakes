@@ -17,7 +17,7 @@ class Autoencoder(nn.Module):
             _ConvLayer(256, 512),
             _ConvLayer(512, 1024),
             Flatten(),
-            nn.Linear(1024 * 4 * 4 , 1024),    ## extra *4 for 128 images 
+            nn.Linear(1024 * 4 * 4 , 1024),    ## extra *4 for 128 images
             nn.Linear(1024, 1024 * 4 * 4),
             Reshape(),
             _UpScale(1024, 512),

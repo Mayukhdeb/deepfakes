@@ -11,7 +11,7 @@ import numpy as np
 class image_dataset(Dataset):
     """custom"""
 
-    def __init__(self, image_folder):
+    def __init__(self, image_folder, crop = None):
 
         self.image_paths = np.sort(np.array([image_folder + "/" + i for i in os.listdir(image_folder)]))
         self.transforms_input = transforms.Compose([
@@ -27,12 +27,14 @@ class image_dataset(Dataset):
                             transforms.Resize((64,64 ),Image.BILINEAR),
                             transforms.ToTensor()
                         ])
+        self.crop = crop
         
     def __getitem__(self, idx): 
         image = cv2.imread(self.image_paths[idx])
-        # image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        # cv2.imshow("ssss",image)
-        # cv2.waitKey()
+
+        if self.crop is not None:
+            image = image[self.crop:-self.crop, self.crop:-self.crop]
+
 
         ret  = {
                 "x": self.transforms_input(image),
@@ -43,7 +45,7 @@ class image_dataset(Dataset):
     def __len__(self):
         return len(self.image_paths)
 
-def create_dataloader(image_folder, batch_size, shuffle= True):
-    train_dataset = image_dataset(image_folder = image_folder )
+def create_dataloader(image_folder, batch_size, shuffle= True , crop = None):
+    train_dataset = image_dataset(image_folder = image_folder, crop = crop )
     train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=shuffle)
     return train_loader

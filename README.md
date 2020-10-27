@@ -6,6 +6,7 @@ I will arrange all of the notes properly once I get a better idea of how it work
 2. [Real-Time Single Image and Video Super-Resolution Using an Efficient
 Sub-Pixel Convolutional Neural Network i.e pixel shuffling paper](https://arxiv.org/pdf/1609.05158v2.pdf)
 3. [Useful article in super-resolution](https://towardsdatascience.com/an-evolution-in-single-image-super-resolution-using-deep-learning-66f0adfb2d6b)
+4. [Faceswap-GAN on keras](https://github.com/shaoanlu/faceswap-GAN)
 
 ---
 ## Notes from the deepfake paper 

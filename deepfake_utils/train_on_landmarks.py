@@ -9,12 +9,11 @@ import torch
 import torch.nn as nn
 from torch import nn, optim
 
-batch_size = 3
-train_loader_a = train_loader_util.create_dataloader(image_folder = "datasets/large/A", batch_size = batch_size)
-train_loader_b = train_loader_util.create_dataloader(image_folder = "datasets/large/B", batch_size= batch_size, crop = 120)  ## folder C for cartoons dataset
+batch_size = 10
+train_loader_a = train_loader_util.create_dataloader(image_folder = "datasets/large/A", batch_size = batch_size, landmarks= True)
+train_loader_b = train_loader_util.create_dataloader(image_folder = "datasets/large/B", batch_size= batch_size, landmarks = True)  ## folder C for cartoons dataset
 
-print(len(train_loader_b))
-model = autoencoder.Autoencoder()
+model = autoencoder.Autoencoder_with_landmarks()
 
 
 optimizer_a = optim.Adam([{'params': model.encoder.parameters()},
@@ -24,7 +23,7 @@ optimizer_b = optim.Adam([{'params': model.encoder.parameters()},
                           {'params': model.decoder_B.parameters()}]
                          , lr=5e-5, betas=(0.5, 0.999))
 
-trainer =  train_utils.deepfake_trainer(
+trainer =  train_utils.deepfake_trainer_with_landmarks(
     model = model, 
     train_loader_a = train_loader_a,
     train_loader_b = train_loader_b,
@@ -32,13 +31,13 @@ trainer =  train_utils.deepfake_trainer(
     optimizer_b = optimizer_b  
 )
 
-# trainer.train(
-#     num_steps = 100
-# )
-
 trainer.train(
-    num_steps = 350,
-    checkpoint_path = "model.pth"
+    num_steps = 10
 )
+
+# trainer.train(
+#     num_steps = 350,
+#     checkpoint_path = "model.pth"
+# )
 
 

@@ -5,8 +5,8 @@ import autoencoder
 import matplotlib.pyplot as plt
 import numpy as np
 
-model = autoencoder.Autoencoder()
-inf = train_utils.deepfake_generator(model_class= model, checkpoint_path = "model.pth")
+model = autoencoder.Autoencoder_with_landmarks()
+inf = train_utils.deepfake_generator_with_landmarks(model_class= model, checkpoint_path = "model.pth")
 
 preds = []
 

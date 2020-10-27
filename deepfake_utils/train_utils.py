@@ -198,8 +198,8 @@ class deepfake_generator_with_landmarks():
 
         pack = {
             "x": inp,
-            "l_x":  torch.tensor(landmarks["x"]).view(1,-1),
-            "l_y": torch.tensor(landmarks["y"]).view(1,-1)
+            "l_x":  torch.tensor(landmarks["x"]).view(1,-1).to(self.device),
+            "l_y": torch.tensor(landmarks["y"]).view(1,-1).to(self.device)
         }
 
         pred = self.model.forward(pack, decoder = decoder).cpu().squeeze(0)

@@ -10,7 +10,7 @@ inf = train_utils.deepfake_generator(model_class= model, checkpoint_path = "mode
 
 preds = []
 
-for i in range(10, 20, 1):
+for i in range(10, 30, 1):
     path = "datasets/large/A/" + os.listdir("datasets/large/A")[i]
     original_img = cv2.resize(cv2.imread(path), (64,64))
     

@@ -4,13 +4,13 @@ import os
 import autoencoder
 import matplotlib.pyplot as plt
 import numpy as np
-
+from tqdm import tqdm
 model = autoencoder.Autoencoder_with_landmarks()
 inf = train_utils.deepfake_generator_with_landmarks(model_class= model, checkpoint_path = "model.pth")
 
 preds = []
 
-for i in range(10, 20, 1):
+for i in tqdm(range(10, 30, 1)):
     path = "datasets/large/A/" + os.listdir("datasets/large/A")[i]
     original_img = cv2.resize(cv2.imread(path), (64,64))
     

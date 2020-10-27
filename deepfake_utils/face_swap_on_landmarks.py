@@ -36,7 +36,7 @@ inf = train_utils.deepfake_generator_with_landmarks(model_class= model, checkpoi
 
 swaps = []
 
-for x in range(10, 20, 1):
+for x in range(10):
     path = "datasets/large/A/" + os.listdir("datasets/large/A")[x]
     original_img = cv2.resize(cv2.imread(path), (64,64))
 
@@ -48,7 +48,7 @@ for x in range(10, 20, 1):
     landmarks = find_landmarks(original_img)
     start_point = (landmarks["x"][0], landmarks["y"][0])
 
-    for l in range( len(landmarks["x"][1:18]) -1 ):
+    for l in range( len(landmarks["x"][2:18]) -1 ):
         c = (landmarks["x"][l], landmarks["y"][l])
         c_2 = (landmarks["x"][l+1], landmarks["y"][l+1])
         mask = cv2.line(mask, c, c_2, color = (255,255,255), thickness = 1)
@@ -59,11 +59,23 @@ for x in range(10, 20, 1):
 
     mask = fillHole(mask)
 
+    mask_bar = 1- mask
+
+ 
+
+    box = np.ones([64,64,3])
+
+    for i in range(3):
+
+        box[:,:,i] = box[:,:,i] * mask_bar
+
     for i in range(3):
 
         img_b[:,:,i] = img_b[:,:,i] * mask
 
-    fin = cv2.vconcat([original_img.astype(np.float32)/original_img.max(), img_b])
+    fake = (original_img.astype(np.float32)/original_img.max() * box).astype(np.float32) + img_b
+   
+    fin = cv2.vconcat([original_img.astype(np.float32)/original_img.max(), img_b, fake])
 
     swaps.append(fin)
 

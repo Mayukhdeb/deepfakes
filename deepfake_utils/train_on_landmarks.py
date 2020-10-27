@@ -18,10 +18,10 @@ model = autoencoder.Autoencoder_with_landmarks()
 
 optimizer_a = optim.Adam([{'params': model.encoder.parameters()},
                           {'params': model.decoder_A.parameters()}]
-                         , lr=3e-5, betas=(0.5, 0.999))
+                         , lr=1e-5, betas=(0.5, 0.999))
 optimizer_b = optim.Adam([{'params': model.encoder.parameters()},
                           {'params': model.decoder_B.parameters()}]
-                         , lr=3e-5, betas=(0.5, 0.999))
+                         , lr=1e-5, betas=(0.5, 0.999))
 
 trainer =  train_utils.deepfake_trainer_with_landmarks(
     model = model, 

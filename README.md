@@ -57,4 +57,5 @@ While sub-pixel convolutional layers essentially uses regular convolutional laye
 
 <img src = "images/pixel_shuffle.png" width = "50%">
 
-
+## to-do:
+1. See what happens by feeding facial landmarks into the encoder-decoder model

@@ -5,6 +5,9 @@ from deepcake import autoencoder
 import matplotlib.pyplot as plt
 import numpy as np
 
+plt.rcParams['figure.figsize'] = 7, 3
+
+
 model = autoencoder.Autoencoder()
 inf = training_utils.deepfake_generator(model_class= model, checkpoint_path = "model.pth")
 
@@ -21,7 +24,7 @@ for i in range(10, 200, 30):
 
 
 
-    fin = cv2.vconcat([img_b, img_a])
+    fin = cv2.vconcat([ (original_img/original_img.max()).astype(np.float32),img_b, img_a])
     preds.append(fin)
 
 

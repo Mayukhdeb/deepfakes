@@ -1,6 +1,6 @@
 # deepfakes
 
-<img src = "https://github.com/Mayukhdeb/deepfakes/blob/main/deepfake_utils/output/preds.jpg?raw=true">
+<img src = "https://github.com/Mayukhdeb/deepfakes/blob/main/output/preds.jpg?raw=true">
 I will arrange all of the notes properly once I get a better idea of how it works. 
 
 ## Important links

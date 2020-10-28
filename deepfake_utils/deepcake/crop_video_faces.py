@@ -50,10 +50,10 @@ def video_to_frames(video_path, new_folder_path, size = (64,64)):
     return frames_paths
 
 
-print("main")
+#print("main")
 
-trim_video(source_path = "datasets/obama.mp4", start_time = 60 + 52, end_time = 120 + 5, target_path = "datasets/obama_trimmed.mp4")
-video_to_frames("datasets/obama_trimmed.mp4", "datasets/obama")
+#trim_video(source_path = "datasets/obama.mp4", start_time = 60 + 52, end_time = 120 + 5, target_path = "datasets/obama_trimmed.mp4")
+#video_to_frames("datasets/obama_trimmed.mp4", "datasets/obama")
 
 trim_video(source_path = "datasets/trump.mp4", start_time = 2, end_time = 60, target_path = "datasets/trump_trimmed.mp4")
 video_to_frames("datasets/trump_trimmed.mp4", "datasets/trump")

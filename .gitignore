@@ -4,3 +4,4 @@ __pycache__/
 datasets/
 model.pth
 sample.jpg
+data/

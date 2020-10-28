@@ -7,14 +7,16 @@ import shutil
 import matplotlib.pyplot as plt
 
 
-face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+current_folder = os.path.dirname(__file__)
+haarcascade_path = current_folder + "/" + "haarcascade_frontalface_default.xml"
+face_cascade = cv2.CascadeClassifier( haarcascade_path)
 
 def trim_video(source_path, start_time, end_time, target_path):
     ffmpeg_extract_subclip(source_path, start_time, end_time, targetname=target_path)
 
 
 
-def video_to_frames(video_path, new_folder_path, size = (64,64)):
+def crop_video_faces(video_path, new_folder_path, size = (64,64)):
     frames_paths = []
     try:
         os.mkdir(new_folder_path)
@@ -44,6 +46,8 @@ def video_to_frames(video_path, new_folder_path, size = (64,64)):
                 frames_paths.append(fmt_name)
 
                 count += 1
+                if count % 100 == 0:
+                    print(count)
         except:
             pass 
     print ("saved ", count-1, " frames at ", new_folder_path)
@@ -56,4 +60,4 @@ def video_to_frames(video_path, new_folder_path, size = (64,64)):
 #video_to_frames("datasets/obama_trimmed.mp4", "datasets/obama")
 
 # trim_video(source_path = "datasets/trump.mp4", start_time = 2, end_time = 60, target_path = "datasets/trump_trimmed.mp4")
-# video_to_frames("datasets/trump_trimmed.mp4", "datasets/trump")
+# video_to_frames("datasets/trump_trimmed.mp4", "datasets/trump"

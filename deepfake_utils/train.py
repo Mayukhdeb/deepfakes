@@ -9,7 +9,7 @@ import torch
 import torch.nn as nn
 from torch import nn, optim
 
-batch_size = 64
+batch_size = 32
 
 train_loader_a = train_loader_utils.create_dataloader(image_folder = "data/cropped_frames/elon", batch_size = batch_size)
 train_loader_b = train_loader_utils.create_dataloader(image_folder = "data/cropped_frames/obama", batch_size= batch_size)  

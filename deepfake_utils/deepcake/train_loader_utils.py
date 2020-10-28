@@ -15,6 +15,8 @@ from ._utils import get_image_paths
 from ._utils import load_images
 from ._utils import random_warp
 
+import albumentations as A
+
 
 class image_dataset(Dataset):
     """custom"""
@@ -36,13 +38,21 @@ class image_dataset(Dataset):
                             transforms.ToTensor()
                         ])
 
+        self.augmentations =  A.Compose([
+            A.HorizontalFlip(p=0.5)
+        ])
+
         
     def __getitem__(self, idx): 
         image = self.all_images[idx] 
         
+        
+        image, label = random_warp(image)
 
-        warped_img, target_img = random_warp(image)
 
+        augmented = self.augmentations(image = image, label = label)
+
+        warped_img, target_img = augmented["image"], augmented["label"]
         # print(warped_img.shape, target_img.shape)
 
         # plt.imshow(target_img)
@@ -72,3 +82,19 @@ def create_dataloader(image_folder, batch_size, shuffle= True , crop = None):
     train_dataset = image_dataset(image_folder = image_folder)
     train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=shuffle)
     return train_loader
+
+
+
+    '''
+
+    capsicum   200 
+    bean   200
+    gajar  4-5
+    tomat  500
+    saag 
+    chaa pata
+    boost 
+    butter check 
+
+    '''
+

@@ -1,5 +1,5 @@
-from deepcake .crop_video_faces import crop_video_faces
-from deepcake .crop_video_faces import trim_video
+from deepcake.crop_video_faces import crop_video_faces
+from deepcake.crop_video_faces import trim_video
 
 
 trim_video(source_path = "data/videos/obama.mp4", start_time = 60 + 52, end_time = 200, target_path = "data/videos/obama_trimmed.mp4")

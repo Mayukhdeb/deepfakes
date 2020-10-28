@@ -6,3 +6,6 @@ model.pth
 sample.jpg
 data/
 deepcake_model.pth
+build/
+deepcake.egg-info/
+dist/

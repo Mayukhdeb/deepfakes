@@ -9,108 +9,67 @@ import cv2
 from PIL import Image
 import numpy as np 
 import face_alignment
+import matplotlib.pyplot as plt
 
-device = "cuda" if torch.cuda.is_available() else "cpu"
-fa = face_alignment.FaceAlignment(face_alignment.LandmarksType._2D, flip_input=False, device= device)
+from ._utils import get_image_paths
+from ._utils import load_images
+from ._utils import random_warp
 
-def find_landmarks(image_np):
-    preds = fa.get_landmarks(image_np)[0]
-    x = preds[:,0]
-    y = preds[:,1]
-    
-    d = {
-        "x": x,
-        "y": y
-    }
-    return d
 
 class image_dataset(Dataset):
     """custom"""
 
-    def __init__(self, image_folder, crop = None):
+    def __init__(self, image_folder):
 
-        self.image_paths = np.sort(np.array([image_folder + "/" + i for i in os.listdir(image_folder)]))
-        self.transforms_input = transforms.Compose([
-                            transforms.ToPILImage(),
-                            transforms.Resize((64,64 ),Image.BILINEAR),
-                            # transforms.RandomHorizontalFlip(p=0.5),
-                            # transforms.RandomAffine(1, translate=(0.05, 0.05), scale=None, shear=0.05, resample=False, fillcolor=0),
+        self.image_paths = get_image_paths(image_folder)
+
+        self.all_images = load_images(self.image_paths) / 255.0
+
+        print(self.all_images.max(), self.all_images.min())
+
+
+        print(self.all_images.shape)
+        self.transforms = transforms.Compose([
+                            # transforms.ToPILImage(),
+                            # transforms.Resize((64,64 ),Image.BILINEAR),
+                            # transforms.RandomHorizontalFlip(0.5),
+                            # transforms.RandomAffine( 10, translate= (0.05,0.05), scale=(0.05,0.05), shear=None, resample=0, fillcolor=0),
                             transforms.ToTensor()
                         ])
 
-        self.transforms_target = transforms.Compose([
-                            transforms.ToPILImage(),
-                            transforms.Resize((64,64 ),Image.BILINEAR),
-                            transforms.ToTensor()
-                        ])
-        self.crop = crop
         
     def __getitem__(self, idx): 
-        image = cv2.imread(self.image_paths[idx])
+        image = self.all_images[idx] 
+        
 
-        if self.crop is not None:
-            image = image[self.crop:-self.crop, self.crop:-self.crop]
+        warped_img, target_img = random_warp(image)
+
+        # print(warped_img.shape, target_img.shape)
+
+        # plt.imshow(target_img)
+        # plt.show()
+
+        # plt.imshow(warped_img)
+        # plt.show()
+        
+
+        im_tensor_x = self.transforms(warped_img)
+        im_tensor_y = self.transforms(target_img)
+
 
 
         ret  = {
-                "x": self.transforms_input(image),
-                "y": self.transforms_target(image)
+                "x": im_tensor_x.float(),
+                "y": im_tensor_y.float()
         }
         return ret
         
     def __len__(self):
         return len(self.image_paths)
 
-class image_dataset_with_landmarks(Dataset):
-    """custom"""
 
-    def __init__(self, image_folder, crop = None):
-
-        self.image_paths = np.sort(np.array([image_folder + "/" + i for i in os.listdir(image_folder)]))
-        self.transforms_input = transforms.Compose([
-                            transforms.ToPILImage(),
-                            transforms.Resize((64,64 ),Image.BILINEAR),
-                            # transforms.RandomHorizontalFlip(p=0.5),
-                            # transforms.RandomAffine(1, translate=(0.05, 0.05), scale=None, shear=0.05, resample=False, fillcolor=0),
-                            transforms.ToTensor()
-                        ])
-
-        self.transforms_target = transforms.Compose([
-                            transforms.ToPILImage(),
-                            transforms.Resize((64,64 ),Image.BILINEAR),
-                            transforms.ToTensor()
-                        ])
-        self.crop = crop
-        
-    def __getitem__(self, idx): 
-        image = cv2.imread(self.image_paths[idx])
-        
-        if self.crop is not None:
-            image = image[self.crop:-self.crop, self.crop:-self.crop]
-
-        landmarks = find_landmarks(image)
-
-        l_x, l_y = landmarks["x"], landmarks["y"]
-        
-
-        ret  = {
-                "x": self.transforms_input(image),
-                "y": self.transforms_target(image),
-                "l_x": torch.tensor(l_x),
-                "l_y": torch.tensor(l_y)
-        }
-
-        return ret
-        
-    def __len__(self):
-        return len(self.image_paths)
-
-
-def create_dataloader(image_folder, batch_size, shuffle= True , crop = None, landmarks = False):
-    if landmarks == True:
-        train_dataset = image_dataset_with_landmarks(image_folder = image_folder, crop = crop )
-
-    else:
-        train_dataset = image_dataset(image_folder = image_folder, crop = crop )
+def create_dataloader(image_folder, batch_size, shuffle= True , crop = None):
+    
+    train_dataset = image_dataset(image_folder = image_folder)
     train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=shuffle)
     return train_loader

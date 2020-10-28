@@ -9,13 +9,13 @@ import torch
 import torch.nn as nn
 from torch import nn, optim
 
-batch_size = 3
+batch_size = 64
 
 train_loader_a = train_loader_utils.create_dataloader(image_folder = "data/cropped_frames/elon", batch_size = batch_size)
 train_loader_b = train_loader_utils.create_dataloader(image_folder = "data/cropped_frames/obama", batch_size= batch_size)  
 
-print(len(train_loader_b))
-print(len(train_loader_a))
+# print(len(train_loader_b))
+# print(len(train_loader_a))
 
 model = autoencoder.Autoencoder()
 
@@ -35,14 +35,14 @@ trainer =  training_utils.deepfake_trainer(
     optimizer_b = optimizer_b  
 )
 
-trainer.train(
-    num_steps = 10,
-    save_path= "deepcake_model.pth"
-)
-
 # trainer.train(
-#     num_steps = 350,
-#     checkpoint_path = "model.pth"
+#     num_steps = 10,
+#     save_path= "deepcake_model.pth"
 # )
+
+trainer.train(
+    num_steps = 1000,
+    checkpoint_path = "model.pth"
+)
 
 

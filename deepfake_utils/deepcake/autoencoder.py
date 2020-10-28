@@ -56,6 +56,8 @@ class Autoencoder(nn.Module):
             out = self.decoder_B(out)
         return out
 
+
+## future potential 
 class Autoencoder_with_landmarks(nn.Module):
     def __init__(self):
         super(Autoencoder_with_landmarks, self).__init__()

@@ -1,12 +1,12 @@
 import cv2
-from deepcake import train_utils
+from deepcake import training_utils
 import os 
 from deepcake import autoencoder
 import matplotlib.pyplot as plt
 import numpy as np
 
 model = autoencoder.Autoencoder()
-inf = train_utils.deepfake_generator(model_class= model, checkpoint_path = "deepcake_model.pth")
+inf = training_utils.deepfake_generator(model_class= model, checkpoint_path = "model.pth")
 
 preds = []
 target_folder = "data/cropped_frames/elon"
@@ -20,13 +20,13 @@ for i in range(10, 30, 2):
     img_a = inf.inference(image_path = path , decoder = "A")
 
 
-    fin = cv2.vconcat([original_img.astype(np.float32)/original_img.max(), img_a, img_b])
+
+    fin = cv2.vconcat([original_img.astype(np.float32)/original_img.max(), img_b, img_a])
     preds.append(fin)
 
 
 all_preds = cv2.cvtColor(cv2.hconcat(preds), cv2.COLOR_BGR2RGB)
 plt.imshow(all_preds)
 plt.axis("off")
-# plt.ylabel("A, A to A, A to B")
-plt.savefig("output/preds.jpg")
+plt.savefig("output/preds_2.jpg")
 plt.show()

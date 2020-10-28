@@ -4,11 +4,15 @@ from tqdm import tqdm
 from PIL import Image
 import torchvision.transforms as transforms
 
-from .train_loader_utils import find_landmarks
 
 import cv2
 import numpy as np 
 
+
+from ._utils import load_images
+from ._utils import random_warp
+
+import matplotlib.pyplot as plt
 
 def var_to_np(img_var):
     return img_var.data.cpu().numpy()
@@ -168,11 +172,18 @@ class deepfake_generator():
 
         self.model.load_state_dict(torch.load(checkpoint_path))
         self.model.to(self.device)
+
+        
     def inference(self, image_path, decoder):
 
-        image = cv2.imread(image_path)
+        image = cv2.resize(cv2.imread(image_path), (256,256))
 
-        inp = mini_transforms(image).unsqueeze(0).to(self.device)
+        x, y = random_warp(image)
+
+        # plt.imshow(x)
+
+        # plt.show()
+        inp = mini_transforms(x).unsqueeze(0).to(self.device)
 
         pred = self.model.forward(inp, decoder = decoder).cpu().squeeze(0)
 
@@ -180,31 +191,4 @@ class deepfake_generator():
 
         return pred_np
 
-class deepfake_generator_with_landmarks():
-    def __init__(self, model_class, checkpoint_path):
-        self.model = model_class
-        self.device = "cuda" if torch.cuda.is_available() else "cpu"
-
-        self.model.load_state_dict(torch.load(checkpoint_path))
-        self.model.to(self.device)
-    def inference(self, image_path, decoder):
-
-        image = cv2.imread(image_path)
-
-        landmarks = find_landmarks(image)
-
-    
-        inp = mini_transforms(image).unsqueeze(0).to(self.device)
-
-        pack = {
-            "x": inp,
-            "l_x":  torch.tensor(landmarks["x"]).view(1,-1).to(self.device),
-            "l_y": torch.tensor(landmarks["y"]).view(1,-1).to(self.device)
-        }
-
-        pred = self.model.forward(pack, decoder = decoder).cpu().squeeze(0)
-
-        pred_np = pred.detach().cpu().permute(1,2,0).numpy()
-
-        return pred_np
 

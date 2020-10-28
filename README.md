@@ -61,3 +61,5 @@ While sub-pixel convolutional layers essentially uses regular convolutional laye
 ## to-do:
 1. See what happens by feeding facial landmarks into the encoder-decoder model
 2. Implement umeyama after resizing to `(256,256)`
+3. Figure out why umeyama works 
+4. Integrate albumentations 

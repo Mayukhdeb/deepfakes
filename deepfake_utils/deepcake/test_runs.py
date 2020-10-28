@@ -1,7 +1,7 @@
 import torch
-import autoencoder
-import autoencoder_utils
-import train_loader_util 
+import .autoencoder
+import .autoencoder_utils
+import .train_loader_utils
 
 device = ("cuda" if torch.cuda.is_available() else "cpu")
 

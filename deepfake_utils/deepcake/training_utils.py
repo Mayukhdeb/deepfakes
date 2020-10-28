@@ -4,7 +4,7 @@ from tqdm import tqdm
 from PIL import Image
 import torchvision.transforms as transforms
 
-from .train_loader_util import find_landmarks
+from .train_loader_utils import find_landmarks
 
 import cv2
 import numpy as np 
@@ -23,7 +23,7 @@ class deepfake_trainer():
     def __init__(self, model, train_loader_a, train_loader_b, optimizer_a, optimizer_b, checkpoint_path = None):
         self.model = model
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
-        print("on device:", self.device)
+        
 
         if checkpoint_path is not None:
             self.model.load_state_dict(torch.load(checkpoint_path))
@@ -35,7 +35,7 @@ class deepfake_trainer():
         self.optimizer_b = optimizer_b
 
         self.criterion = nn.L1Loss()
-
+        print("deepcake trainer initiated on device:", self.device)
 
     def _train_single_step(self):
         batch_a = next(iter(self.train_loader_a))

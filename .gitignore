@@ -5,3 +5,4 @@ datasets/
 model.pth
 sample.jpg
 data/
+deepcake_model.pth

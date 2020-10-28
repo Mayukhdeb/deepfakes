@@ -1,6 +1,6 @@
-import autoencoder
-import train_loader_util 
-import train_utils
+from deepcake import autoencoder
+from deepcake import train_loader_utils
+from deepcake import training_utils
 
 import os 
 import cv2
@@ -10,10 +10,13 @@ import torch.nn as nn
 from torch import nn, optim
 
 batch_size = 3
-train_loader_a = train_loader_util.create_dataloader(image_folder = "datasets/large/A", batch_size = batch_size)
-train_loader_b = train_loader_util.create_dataloader(image_folder = "datasets/large/B", batch_size= batch_size, crop = 120)  ## folder C for cartoons dataset
+
+train_loader_a = train_loader_utils.create_dataloader(image_folder = "data/cropped_frames/elon", batch_size = batch_size)
+train_loader_b = train_loader_utils.create_dataloader(image_folder = "data/cropped_frames/obama", batch_size= batch_size)  
 
 print(len(train_loader_b))
+print(len(train_loader_a))
+
 model = autoencoder.Autoencoder()
 
 
@@ -24,7 +27,7 @@ optimizer_b = optim.Adam([{'params': model.encoder.parameters()},
                           {'params': model.decoder_B.parameters()}]
                          , lr=5e-5, betas=(0.5, 0.999))
 
-trainer =  train_utils.deepfake_trainer(
+trainer =  training_utils.deepfake_trainer(
     model = model, 
     train_loader_a = train_loader_a,
     train_loader_b = train_loader_b,
@@ -32,13 +35,14 @@ trainer =  train_utils.deepfake_trainer(
     optimizer_b = optimizer_b  
 )
 
-# trainer.train(
-#     num_steps = 100
-# )
-
 trainer.train(
-    num_steps = 350,
-    checkpoint_path = "model.pth"
+    num_steps = 10,
+    save_path= "deepcake_model.pth"
 )
+
+# trainer.train(
+#     num_steps = 350,
+#     checkpoint_path = "model.pth"
+# )
 
 

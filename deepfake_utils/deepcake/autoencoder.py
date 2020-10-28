@@ -2,8 +2,8 @@ import torch
 import torch.nn as nn
 import torch.utils.data
 from torch import nn, optim
-from conv_nd import Conv2d
-from autoencoder_utils import _ConvLayer, _UpScale, _PixelShuffler, Flatten, Reshape
+from .conv_nd import Conv2d
+from .autoencoder_utils import _ConvLayer, _UpScale, _PixelShuffler, Flatten, Reshape
 
 
 

@@ -1,17 +1,19 @@
 import cv2
-import train_utils
+from deepcake import train_utils
 import os 
-import autoencoder
+from deepcake import autoencoder
 import matplotlib.pyplot as plt
 import numpy as np
 
 model = autoencoder.Autoencoder()
-inf = train_utils.deepfake_generator(model_class= model, checkpoint_path = "model.pth")
+inf = train_utils.deepfake_generator(model_class= model, checkpoint_path = "deepcake_model.pth")
 
 preds = []
+target_folder = "data/cropped_frames/elon"
 
-for i in range(10, 30, 1):
-    path = "datasets/large/A/" + os.listdir("datasets/large/A")[i]
+
+for i in range(10, 30, 2):
+    path = target_folder +  "/" + os.listdir(target_folder)[i]
     original_img = cv2.resize(cv2.imread(path), (64,64))
     
     img_b = inf.inference(image_path = path , decoder = "B")

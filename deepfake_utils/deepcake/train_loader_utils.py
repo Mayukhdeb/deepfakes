@@ -25,10 +25,9 @@ class image_dataset(Dataset):
 
         self.all_images = load_images(self.image_paths) / 255.0
 
-        print(self.all_images.max(), self.all_images.min())
 
 
-        print(self.all_images.shape)
+        # print(self.all_images.shape)
         self.transforms = transforms.Compose([
                             # transforms.ToPILImage(),
                             # transforms.Resize((64,64 ),Image.BILINEAR),

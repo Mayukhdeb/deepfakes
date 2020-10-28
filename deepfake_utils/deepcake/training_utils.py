@@ -27,9 +27,11 @@ class deepfake_trainer():
     def __init__(self, model, train_loader_a, train_loader_b, optimizer_a, optimizer_b, checkpoint_path = None):
         self.model = model
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
+
         
 
         if checkpoint_path is not None:
+            print("loading checkpoint: ", checkpoint_path)
             self.model.load_state_dict(torch.load(checkpoint_path))
     
         self.train_loader_a = train_loader_a
@@ -66,6 +68,8 @@ class deepfake_trainer():
     def train(self, num_steps, checkpoint_path = None, save_path = "model.pth"):
 
         if checkpoint_path is not None:
+            print("loading checkpoint: ", checkpoint_path)
+
             self.model.load_state_dict(torch.load(checkpoint_path))
 
         self.model.to(self.device)
@@ -77,7 +81,7 @@ class deepfake_trainer():
                 loss_a, loss_b = self._train_single_step()
 
             except KeyboardInterrupt:
-                print("ungracefully stopping...")
+                print("\nungracefully stopping...")
                 break
 
         print('lossA:{}, lossB:{}'.format( loss_a, loss_b))

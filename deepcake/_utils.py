@@ -1,6 +1,7 @@
 import cv2
 import numpy
 import os
+import matplotlib.pyplot as plt
 
 from .umeyama import umeyama
 
@@ -19,7 +20,7 @@ def random_transform(image, rotation_range, zoom_range, shift_range, random_flip
 
 def random_warp(image):
     assert image.shape == (256, 256, 3)
-    _crop_factor = 110
+    _crop_factor = 128  ## 128 means no crop 
 
     range_ = numpy.linspace(128 - _crop_factor, 128 + _crop_factor, 5)
     mapx = numpy.broadcast_to(range_, (5, 5))
@@ -38,6 +39,9 @@ def random_warp(image):
     mat = umeyama(src_points, dst_points, True)[0:2]
 
     target_image = cv2.warpAffine(image, mat, (64, 64))
+
+    # plt.imshow(cv2.hconcat([warped_image, target_image]))
+    # plt.show()
 
     return warped_image, target_image
 

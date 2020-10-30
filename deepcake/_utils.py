@@ -65,12 +65,3 @@ def get_transpose_axes(n):
         x_axes = list(range(1, n - 1, 2))
     return y_axes, x_axes, [n - 1]
 
-
-def stack_images(images):
-    images_shape = numpy.array(images.shape)
-    new_axes = get_transpose_axes(len(images_shape))
-    new_shape = [numpy.prod(images_shape[x]) for x in new_axes]
-    return numpy.transpose(
-        images,
-        axes=numpy.concatenate(new_axes)
-    ).reshape(new_shape)

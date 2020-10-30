@@ -5,10 +5,17 @@ I will arrange all of the notes properly once I get a better idea of how it work
 
 ## Important links
 1. [Deepfake paper](https://arxiv.org/abs/1909.11573)
+<<<<<<< HEAD
 2. [Pixel shuffling paper](https://arxiv.org/pdf/1609.05158v2.pdf)
 3. [Article on super-resolution](https://towardsdatascience.com/an-evolution-in-single-image-super-resolution-using-deep-learning-66f0adfb2d6b)
 4. [Umeyama algorithm paper](https://pdfs.semanticscholar.org/d107/231cce2676dbeea87e00bb0c587c280b9c53.pdf) 
 5. [Article on transformations of images](https://towardsdatascience.com/transformations-with-opencv-ff9a7bea7f8b)
+=======
+2. [Real-Time Single Image and Video Super-Resolution Using an Efficient
+Sub-Pixel Convolutional Neural Network i.e pixel shuffling paper](https://arxiv.org/pdf/1609.05158v2.pdf)
+3. [Useful article in super-resolution](https://towardsdatascience.com/an-evolution-in-single-image-super-resolution-using-deep-learning-66f0adfb2d6b)
+4. [Useful article to understand the concept of transformation matrices](https://towardsdatascience.com/transformations-with-opencv-ff9a7bea7f8b)
+>>>>>>> build first prototype
 
 ---
 ## Notes from the deepfake paper 

@@ -4,12 +4,25 @@ import os
 from deepcake import autoencoder
 import matplotlib.pyplot as plt
 import numpy as np
+import face_alignment
 
 plt.rcParams['figure.figsize'] = 7, 3
 
 
+fa = face_alignment.FaceAlignment(face_alignment.LandmarksType._2D, flip_input=False)
+def find_landmarks(image_np):
+    preds = fa.get_landmarks(image_np)[0]
+    x = preds[:,0]
+    y = preds[:,1]
+    
+    d = {
+        "x": x,
+        "y": y
+    }
+    return d
+
 model = autoencoder.Autoencoder()
-inf = training_utils.deepfake_generator(model_class= model, checkpoint_path = "model.pth")
+inf = training_utils.deepfake_generator(model_class= model, checkpoint_path = "models/model.pth")
 
 preds = []
 target_folder = "data/cropped_frames/elon"
@@ -18,11 +31,27 @@ target_folder = "data/cropped_frames/elon"
 for i in range(10, 200, 30):
     path = target_folder +  "/" + os.listdir(target_folder)[i]
     original_img = cv2.resize(cv2.imread(path), (64,64))
-    
-    img_b = inf.inference(image_path = path , decoder = "B")
-    img_a = inf.inference(image_path = path , decoder = "A")
 
-    fin = cv2.vconcat([ (original_img/original_img.max()).astype(np.float32),img_b, img_a])
+    pred = find_landmarks(original_img)
+    plt.imshow(original_img)
+    plt.scatter(pred["x"], pred["y"])
+    plt.show()
+    
+    img_b = inf.inference( image_bgr = original_img , decoder = "B",  crop = 48)
+    img_a = inf.inference(image_bgr = original_img , decoder = "A", crop = 48)
+
+    img_c  = (original_img/original_img.max()).astype(np.float32)
+
+    img_c[12:-12, 12:-12 , :] = cv2.resize(img_b, (40,40))
+
+
+    # pred = find_landmarks(img_b)
+    # plt.imshow(original_img)
+    # plt.scatter(pred["x"], pred["y"])
+    # plt.show()
+
+
+    fin = cv2.vconcat([ (original_img/original_img.max()).astype(np.float32),img_b, img_a, img_c])
     preds.append(fin)
 
 

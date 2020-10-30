@@ -36,11 +36,11 @@ for i in range(10, 200, 30):
     img_a = inf.inference(image_bgr = original_img , decoder = "A")
 
     l = fa.get_landmarks(img_b)  ## need to get landmarks
-    img_c  = (original_img/original_img.max()).astype(np.float32)
+    # img_c  = (original_img/original_img.max()).astype(np.float32)
 
-    img_c[12:-12, 12:-12 , :] = cv2.resize(img_b, (40,40))
+    # img_c[12:-12, 12:-12 , :] = cv2.resize(img_b, (40,40))
 
-    fin = cv2.vconcat([ (original_img/original_img.max()).astype(np.float32),img_b, img_a, img_c])
+    fin = cv2.vconcat([ (original_img/original_img.max()).astype(np.float32),img_b, img_a])
     preds.append(fin)
 
 

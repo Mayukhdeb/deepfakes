@@ -19,7 +19,9 @@ def random_transform(image, rotation_range, zoom_range, shift_range, random_flip
 
 def random_warp(image):
     assert image.shape == (256, 256, 3)
-    range_ = numpy.linspace(128 - 80, 128 + 80, 5)
+    _crop_factor = 110
+
+    range_ = numpy.linspace(128 - _crop_factor, 128 + _crop_factor, 5)
     mapx = numpy.broadcast_to(range_, (5, 5))
     mapy = mapx.T
 

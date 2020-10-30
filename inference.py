@@ -9,7 +9,6 @@ import numpy as np
 plt.rcParams['figure.figsize'] = 7, 3
 
 
-fa = face_alignment.FaceAlignment(face_alignment.LandmarksType._2D, flip_input=False)
 def find_landmarks(image_np):
     preds = fa.get_landmarks(image_np)[0]
     x = preds[:,0]
@@ -22,7 +21,7 @@ def find_landmarks(image_np):
     return d
 
 model = autoencoder.Autoencoder()
-inf = training_utils.deepfake_generator(model_class= model, checkpoint_path = "models/model.pth")
+inf = training_utils.deepfake_generator(model_class= model, checkpoint_path = "model.pth")
 
 preds = []
 target_folder = "data/cropped_frames/elon"
@@ -32,8 +31,8 @@ for i in range(10, 200, 30):
     path = target_folder +  "/" + os.listdir(target_folder)[i]
     original_img = cv2.resize(cv2.imread(path), (64,64))
     
-    img_b = inf.inference( image_bgr = original_img , decoder = "B",  crop = 48)
-    img_a = inf.inference(image_bgr = original_img , decoder = "A", crop = 48)
+    img_b = inf.inference( image_bgr = original_img , decoder = "B")
+    img_a = inf.inference(image_bgr = original_img , decoder = "A")
 
     img_c  = (original_img/original_img.max()).astype(np.float32)
 

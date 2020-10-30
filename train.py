@@ -22,10 +22,10 @@ model = autoencoder.Autoencoder()
 
 optimizer_a = optim.Adam([{'params': model.encoder.parameters()},
                           {'params': model.decoder_A.parameters()}]
-                         , lr=5e-5, betas=(0.5, 0.999))
+                         , lr=3e-5, betas=(0.5, 0.999))
 optimizer_b = optim.Adam([{'params': model.encoder.parameters()},
                           {'params': model.decoder_B.parameters()}]
-                         , lr=5e-5, betas=(0.5, 0.999))
+                         , lr=3e-5, betas=(0.5, 0.999))
 
 trainer =  training_utils.deepfake_trainer(
     model = model, 
@@ -36,13 +36,14 @@ trainer =  training_utils.deepfake_trainer(
 )
 
 # trainer.train(
-#     num_steps = 10,
-#     save_path= "deepcake_model.pth"
+#     num_steps = 1000,
+#     save_path= "model.pth"
 # )
 
-trainer.train(
-    num_steps = 1000,
-    checkpoint_path = "model.pth"
-)
+# trainer.train(
+#     num_steps = 1000,
+#     checkpoint_path = "model.pth",
+#     save_path= "model.pth"
+# )
 
 

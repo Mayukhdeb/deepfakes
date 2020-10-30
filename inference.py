@@ -4,10 +4,11 @@ import os
 from deepcake import autoencoder
 import matplotlib.pyplot as plt
 import numpy as np
-
+import face_alignment
 
 plt.rcParams['figure.figsize'] = 7, 3
 
+fa = face_alignment.FaceAlignment(face_alignment.LandmarksType._2D, flip_input=False)
 
 def find_landmarks(image_np):
     preds = fa.get_landmarks(image_np)[0]
@@ -34,6 +35,7 @@ for i in range(10, 200, 30):
     img_b = inf.inference( image_bgr = original_img , decoder = "B")
     img_a = inf.inference(image_bgr = original_img , decoder = "A")
 
+    l = fa.get_landmarks(img_b)  ## need to get landmarks
     img_c  = (original_img/original_img.max()).astype(np.float32)
 
     img_c[12:-12, 12:-12 , :] = cv2.resize(img_b, (40,40))

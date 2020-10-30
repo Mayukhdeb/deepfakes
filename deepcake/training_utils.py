@@ -178,20 +178,13 @@ class deepfake_generator():
         self.model.to(self.device)
 
         
-    def inference(self, image_bgr, decoder, crop = 48):
+    def inference(self, image_bgr, decoder):
 
         image = cv2.resize(image_bgr, (256,256))
 
-        if crop is not None:
-            image = image[crop:-crop, crop:-crop, :]
-            image = cv2.resize(image, (256,256))
-
-
-        # x, y = random_warp(image)
-
-        # plt.imshow(x)
-
-        # plt.show()
+        # if crop is not None:
+        #     image = image[crop:-crop, crop:-crop, :]
+        #     image = cv2.resize(image, (256,256))
 
         inp = mini_transforms(image).unsqueeze(0).to(self.device)
 

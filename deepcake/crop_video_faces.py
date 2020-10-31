@@ -17,6 +17,8 @@ def trim_video(source_path, start_time, end_time, target_path):
 
 
 def crop_video_faces(video_path, new_folder_path, size = (64,64)):
+    pad= 22
+    print("padding set to ", pad)
     frames_paths = []
     try:
         os.mkdir(new_folder_path)
@@ -37,7 +39,8 @@ def crop_video_faces(video_path, new_folder_path, size = (64,64)):
             faces = face_cascade.detectMultiScale(gray, 1.3, 5,minSize=(50,50))
 
             for (x, y, w, h) in faces:
-                image = image[y:y+h, x:x+w, :]
+                
+                image = image[y - pad :y+h + pad, x - pad :x+w + pad , :]
             
             image = cv2.resize(image,size)
             

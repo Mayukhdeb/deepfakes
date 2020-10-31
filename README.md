@@ -71,7 +71,7 @@ While sub-pixel convolutional layers essentially uses regular convolutional laye
 
 And this is exactly what the umeyama algorithm does, it finds a set of similarity transformation parameters (rotation, translation, scaling) that minimizes the MSE Loss between the patterns.
 
-<img src = "https://github.com/Mayukhdeb/deepfakes/blob/main/images/umeyama_on_image.png?raw=true" width = "60%">
+<img src = "https://github.com/Mayukhdeb/deepfakes/blob/master/images/umeyama_on_image.png?raw=true" width = "60%">
 
 **Note**
 * The transformed pattern has the **minimum possible MSE loss** w.r.t the target pattern.
@@ -79,7 +79,7 @@ And this is exactly what the umeyama algorithm does, it finds a set of similarit
 
 ### How does it help here in deepfakes ? 
 
-<img src = "https://github.com/Mayukhdeb/deepfakes/blob/main/images/download.png?raw=true">
+<img src = "https://github.com/Mayukhdeb/deepfakes/blob/master/images/download.png?raw=true">
 We're generating a target image such that it's MSE loss w.r.t the distorted input image is minimized.Thanks to the umeyama algorithm, we are able to do this without distorting the key visual features.
 
 **The two important points to note are:**

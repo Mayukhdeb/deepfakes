@@ -117,3 +117,4 @@ We're taking only the first 2 indices of the transformation matrix because the t
 2. ~~Implement umeyama after resizing to `(256,256)`~~ Works 
 3. ~~Figure out why umeyama works~~ Tried my best
 4. ~~Integrate albumentations~~ Improved performance 
+5. Reduce cropping of faces in generate_training_data.py, face_alignment is not able to detect the fake face landmarks. 

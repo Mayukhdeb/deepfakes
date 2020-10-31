@@ -16,8 +16,8 @@ def trim_video(source_path, start_time, end_time, target_path):
 
 
 
-def crop_video_faces(video_path, new_folder_path, size = (64,64)):
-    pad= 22
+def crop_video_faces(video_path, new_folder_path, size = (64,64), pad = 22):
+
     print("padding set to ", pad)
     frames_paths = []
     try:

@@ -9,3 +9,4 @@ deepcake_model.pth
 build/
 deepcake.egg-info/
 dist/
+fakes/

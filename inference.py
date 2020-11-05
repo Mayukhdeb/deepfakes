@@ -35,16 +35,13 @@ for i in range(10, 200, 30):
     img_b = inf.inference( image_bgr = original_img , decoder = "B")
     img_a = inf.inference(image_bgr = original_img , decoder = "A")
 
-    l = find_landmarks(original_img )
+    # l = find_landmarks(original_img )
     
-    plt.imshow(cv2.cvtColor(img_b, cv2.COLOR_BGR2RGB))
-    plt.scatter(l["x"], l["y"])
-    plt.show()
-    img_c  = (original_img/original_img.max()).astype(np.float32)
+    # plt.imshow(cv2.cvtColor(img_b, cv2.COLOR_BGR2RGB))
+    # plt.scatter(l["x"], l["y"])
+    # plt.show()
 
-    img_c[12:-12, 12:-12 , :] = cv2.resize(img_b, (40,40))
-
-    fin = cv2.vconcat([ (original_img/original_img.max()).astype(np.float32),img_b, img_a, img_c])
+    fin = cv2.vconcat([ (original_img/original_img.max()).astype(np.float32),img_b, img_a])
     preds.append(fin)
 
 

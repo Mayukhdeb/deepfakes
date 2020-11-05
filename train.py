@@ -36,14 +36,14 @@ trainer =  training_utils.deepfake_trainer(
 )
 
 # trainer.train(
-#     num_steps = 1000,
-#     save_path= "model.pth"
+#     num_steps = 500,
+#     save_path= "models/model.pth"
 # )
 
-# trainer.train(
-#     num_steps = 1000,
-#     checkpoint_path = "model.pth",
-#     save_path= "model.pth"
-# )
+trainer.train(
+    num_steps = 10,
+    checkpoint_path = "model.pth",
+    save_path= "models/model.pth"
+)
 
 

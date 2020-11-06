@@ -24,8 +24,9 @@ class image_dataset(Dataset):
     def __init__(self, image_folder):
 
         self.image_paths = get_image_paths(image_folder)
+        print(len(self.image_paths), " images found in ",image_folder)
 
-        self.all_images = load_images(self.image_paths) / 255.0
+        
 
 
 
@@ -44,7 +45,11 @@ class image_dataset(Dataset):
 
         
     def __getitem__(self, idx): 
-        image = self.all_images[idx] 
+        image_path = self.image_paths[idx] 
+
+        image = cv2.imread(image_path)/255.0
+
+        image = cv2.resize(image, (256,256))
         
         
         image, label = random_warp(image)

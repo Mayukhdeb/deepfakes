@@ -22,7 +22,7 @@ def find_landmarks(image_np):
     return d
 
 model = autoencoder.Autoencoder()
-inf = training_utils.deepfake_generator(model_class= model, checkpoint_path = "model.pth")
+inf = training_utils.deepfake_generator(model_class= model, checkpoint_path = "models/model.pth")
 
 preds = []
 target_folder = "data/cropped_frames/elon"
@@ -33,14 +33,9 @@ for i in range(10, 200, 30):
     original_img = cv2.resize(cv2.imread(path), (64,64))
     
     img_b = inf.inference( image_bgr = original_img , decoder = "B")
-    img_a = inf.inference(image_bgr = original_img , decoder = "A")
+    img_c = (original_img/original_img.max()) * 0.5 + img_b * 0.5
 
-    l = fa.get_landmarks(img_b)  ## need to get landmarks
-    # img_c  = (original_img/original_img.max()).astype(np.float32)
-
-    # img_c[12:-12, 12:-12 , :] = cv2.resize(img_b, (40,40))
-
-    fin = cv2.vconcat([ (original_img/original_img.max()).astype(np.float32),img_b, img_a])
+    fin = cv2.vconcat([ (original_img/original_img.max()).astype(np.float32),img_b, ])
     preds.append(fin)
 
 

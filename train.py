@@ -9,7 +9,7 @@ import torch
 import torch.nn as nn
 from torch import nn, optim
 
-batch_size = 32
+batch_size = 16
 
 train_loader_a = train_loader_utils.create_dataloader(image_folder = "data/cropped_frames/elon", batch_size = batch_size)
 train_loader_b = train_loader_utils.create_dataloader(image_folder = "data/cropped_frames/obama", batch_size= batch_size)  
@@ -37,13 +37,13 @@ trainer =  training_utils.deepfake_trainer(
 
 # trainer.train(
 #     num_steps = 1000,
-#     save_path= "model.pth"
+#     save_path= "models/model.pth"
 # )
 
-# trainer.train(
-#     num_steps = 1000,
-#     checkpoint_path = "model.pth",
-#     save_path= "model.pth"
-# )
+trainer.train(
+    num_steps = 2000,
+    checkpoint_path = "models/model.pth",
+    save_path= "models/model.pth"
+)
 
 

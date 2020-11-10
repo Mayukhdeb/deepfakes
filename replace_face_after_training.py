@@ -22,8 +22,7 @@ image_folder = "data/cropped_frames/elon"
 image_paths = [image_folder + "/" + str(i) + ".jpg" for i in range(len(os.listdir(image_folder)))]
 
 
-shutil.rmtree("fakes")
-os.mkdir("fakes")
+
 
 
 def write_video_from_image_list(save_name, all_images_np, framerate, size):
@@ -50,28 +49,16 @@ for i in tqdm(range(len(image_paths[:1000]))):
     name = "fakes/" + str(i) + ".jpg"
 
     
-    img_b_1= ((255*img_b).astype(np.uint8) *0.8 + original_img_1*0.3).astype(np.uint8)
+    img_b_1= (255*img_b).astype(np.uint8) 
 
-
-    path = image_paths[i+1000]
-
-
-    original_img_2 = cv2.resize(cv2.imread(path), (64,64))
-    
-    img_b = inf.inference( image_bgr = original_img_2 , decoder = "B")
-
-    name = "fakes/" + str(i) + ".jpg"
-
-    
-    img_b_2 = ((255*img_b).astype(np.uint8) *0.8 + original_img_2*0.3).astype(np.uint8)
 
 
     img_c_1 = cv2.hconcat([original_img_1, img_b_1])
 
-    img_c_2 = cv2.hconcat([original_img_2, img_b_2])
+    # print(img_c_1.shape)
 
-    img_f = cv2.vconcat([img_c_1, img_c_2])
-    all_images.append(img_f)
+
+    all_images.append(img_c_1)
 
 all_images = np.array(all_images)
-write_video_from_image_list("output/fake.mp4", all_images, framerate = 20, size = (128,128))
+write_video_from_image_list("output/fake.mp4", all_images, framerate = 20, size = (128,64))

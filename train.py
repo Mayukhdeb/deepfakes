@@ -9,7 +9,7 @@ import torch
 import torch.nn as nn
 from torch import nn, optim
 
-batch_size = 16
+batch_size = 32
 
 train_loader_a = train_loader_utils.create_dataloader(image_folder = "data/cropped_frames/elon", batch_size = batch_size)
 train_loader_b = train_loader_utils.create_dataloader(image_folder = "data/cropped_frames/obama", batch_size= batch_size)  
@@ -22,10 +22,10 @@ model = autoencoder.Autoencoder()
 
 optimizer_a = optim.Adam([{'params': model.encoder.parameters()},
                           {'params': model.decoder_A.parameters()}]
-                         , lr=3e-5, betas=(0.5, 0.999))
+                         , lr=1e-5, betas=(0.5, 0.999))
 optimizer_b = optim.Adam([{'params': model.encoder.parameters()},
                           {'params': model.decoder_B.parameters()}]
-                         , lr=3e-5, betas=(0.5, 0.999))
+                         , lr = 1e-5, betas=(0.5, 0.999))
 
 trainer =  training_utils.deepfake_trainer(
     model = model, 

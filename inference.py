@@ -28,20 +28,20 @@ preds = []
 target_folder = "data/cropped_frames/elon"
 
 
-for i in range(10, 100, 10):
+for i in range(10, 400, 40):
     path = target_folder +  "/" + os.listdir(target_folder)[i]
     original_img = cv2.resize(cv2.imread(path), (64,64))
     
     img_b = inf.inference( image_bgr = original_img , decoder = "B")
-    img_c = (original_img/original_img.max()) * 0.3 + img_b * 0.7
+    img_c = (original_img/original_img.max()) * 0.2 + img_b * 0.8
 
-    fin = cv2.vconcat([ (original_img/original_img.max()).astype(np.float32),img_b, img_c.astype(np.float32)])
+    fin = cv2.vconcat([ (original_img/original_img.max()).astype(np.float32),img_b])# img_c.astype(np.float32)])
     preds.append(fin)
 
 
 all_preds = cv2.cvtColor(cv2.hconcat(preds), cv2.COLOR_BGR2RGB)
 plt.imshow(all_preds)
 plt.axis("off")
-plt.title("I bring to you: obama musk")
-plt.savefig("output/preds.jpg")
+# plt.title("I bring to you: obama musk")
+plt.savefig("output/preds_aligned.jpg")
 plt.show()

@@ -2,7 +2,8 @@
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mayukhdeb/deepfakes/blob/master/notebooks/train_model_on_colab.ipynb)
 
 
-<img src = "https://github.com/Mayukhdeb/deepfakes/blob/master/output/preds.jpg?raw=true">
+<img src = "https://github.com/Mayukhdeb/deepfakes/blob/master/output/preds_aligned.jpg?raw=true">
+
 
 
 I will arrange all of the notes properly once I get a better idea of how it works. 
